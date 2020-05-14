@@ -4,11 +4,12 @@ import com.sakshamta.constructor.entities.HouseDetails;
 import com.sakshamta.constructor.model.CostFilter;
 
 import java.util.List;
+import java.util.Map;
 
 public interface HouseDetailsInterface {
      public HouseDetails save(HouseDetails houseDetails);
 
-     public void   delete(Long id);
+     public Map<String, String> delete(Long id);
 
      public List<HouseDetails> listAll();
 
@@ -23,5 +24,7 @@ public interface HouseDetailsInterface {
      public List<HouseDetails> findByEstimateCostBetween(CostFilter costFilter);
 
      public List<HouseDetails> findByLandAreaAndNoOfFloor (String landArea , String noOfFloor);
+
+     public Long findMaxCost();
 
 }

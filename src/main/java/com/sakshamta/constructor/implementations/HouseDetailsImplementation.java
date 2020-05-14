@@ -4,13 +4,10 @@ import com.sakshamta.constructor.entities.HouseDetails;
 import com.sakshamta.constructor.interfaces.HouseDetailsInterface;
 import com.sakshamta.constructor.model.CostFilter;
 import com.sakshamta.constructor.repositories.HouseDetailsRepo;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class HouseDetailsImplementation implements HouseDetailsInterface {
@@ -26,9 +23,12 @@ public class HouseDetailsImplementation implements HouseDetailsInterface {
     }
 
     @Override
-    public void delete(Long id) {
+    public Map<String, String> delete(Long id) {
+        Map<String, String> jsonMap = new HashMap<>();
         HouseDetails houseDetails = houseDetailsRepo.getOne(id);
         houseDetailsRepo.delete(houseDetails);
+        jsonMap.put("response", "Deleted");
+        return jsonMap;
     }
 
     @Override
@@ -82,6 +82,11 @@ public class HouseDetailsImplementation implements HouseDetailsInterface {
     @Override
     public List<HouseDetails> findByLandAreaAndNoOfFloor(String landArea, String noOfFloor) {
         return houseDetailsRepo.findByLandAreaAndNoOfFloor(landArea, noOfFloor);
+    }
+
+    @Override
+    public Long findMaxCost() {
+        return houseDetailsRepo.findMaxEstimatedCost();
     }
 
 

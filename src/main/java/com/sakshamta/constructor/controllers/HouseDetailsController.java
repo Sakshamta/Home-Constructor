@@ -2,13 +2,13 @@ package com.sakshamta.constructor.controllers;
 
 
 import com.sakshamta.constructor.entities.HouseDetails;
-import com.sakshamta.constructor.implementations.HouseDetailsImplementation;
 import com.sakshamta.constructor.interfaces.HouseDetailsInterface;
 import com.sakshamta.constructor.model.CostFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -28,14 +28,20 @@ public class HouseDetailsController {
         return service.listAll();
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Long id){
-        service.delete(id);
+    @DeleteMapping(value = "/{id}", produces = "application/json")
+    public Map<String, String> delete(@PathVariable("id") Long id){
+
+        return service.delete(id);
     }
 
     @GetMapping("/{id}")
     public  HouseDetails getOneById(@PathVariable("id") Long id){
         return  service.listById(id);
+    }
+
+    @GetMapping ("/max")
+    public Long getMaxCost(){
+        return  service.findMaxCost();
     }
 
     @PutMapping("/{id}")
@@ -61,7 +67,6 @@ public class HouseDetailsController {
     public  List<HouseDetails> findByEstimateCostBetween(@RequestBody CostFilter costFilter){
         return service.findByEstimateCostBetween(costFilter);
     }
-
 
     @PostMapping("/area/{landArea}/floor/{noOfFloor}")
     public List<HouseDetails> findByLandAreaAndNoOfFloor(@PathVariable("landArea") String landArea, @PathVariable("noOfFloor") String noOfFloor){
